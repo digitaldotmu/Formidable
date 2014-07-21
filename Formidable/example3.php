@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" /> 
-    <title>Formidable by MatilisLabs Demo 2</title>
+    <title>Formidable by MatilisLabs Demo 3</title>
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/form.css" />
     <style type="text/css">
@@ -21,12 +21,13 @@
 
 <div style="width:500px;margin:0 auto;">
 <?php
+    $form_data = file_get_contents('TestData');
+    
     try{
-        $form = MatilisLabs\Formidable::Build('formidable_demo2')
-        ->Input('do_search','do_search','hidden')   
-        ->Input('keywords','keywords','',array('input', 'text'),'','','Search for...')
-        ->Input('submit', '', 'submit', '', '', 'GO')
-        ->keywords->Value('New value!') //Access an input element by it's ID and update it's value!
+        $form = MatilisLabs\Formidable::BuildFromData($form_data)
+        ->CustomHTML('some_text', '<p>Search everything</p>')
+        ->Input('ok', 'ok', 'checkbox') //Add a checkbox
+        ->keywords->Value('Value updated!') //Access an input element by it's ID and update it's value!
         ->Show();
         
     }catch(MatilisLabs\FormidableException $e){

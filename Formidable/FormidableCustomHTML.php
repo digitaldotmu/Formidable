@@ -14,13 +14,15 @@ namespace MatilisLabs;
 
 class FormidableCustomHTML extends Formidable{
     
+    protected $id;
     protected $html_content;
     
-    public static function Build($html_content){
-        return new FormidableCustomHTML($html_content);
+    public static function Build($id, $html_content){
+        return new FormidableCustomHTML($id, $html_content);
     } 
     
-    protected function __construct($html_content){
+    protected function __construct($id, $html_content){
+        $this->id = $id;
         $this->html_content = $html_content;
         
         Formidable::GetInstance()->PushElement($this);

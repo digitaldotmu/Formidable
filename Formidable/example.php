@@ -31,7 +31,7 @@
         ->Select('title','title',$title_options, '','','Mrs')  
         ->Label('first_name','First Name: ')
         ->Input('first_name','first_name','',array('input', 'text'),'','','First Name')
-        ->CustomHTML('<p>Some custom content in a paragraph</p>')
+        ->CustomHTML('some_text', '<p>Some custom content in a paragraph</p>')
         ->Label('address','Address: ')
         ->Textarea('address', 'address')
         ->Label('ok', 'I accept....')

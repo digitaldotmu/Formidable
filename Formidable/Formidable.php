@@ -78,6 +78,22 @@ class Formidable{
         return new Formidable($id, $action, $method, $enable_file_uploads);
     }
     
+    /**
+     * Factory Method to buid form from data
+     * @public
+     */      
+    public static function BuildFromData($data){
+        $formidable_instance = @unserialize($data);
+        
+        if($formidable_instance instanceof Formidable){
+            self::SetInstance($formidable_instance);
+            return $formidable_instance;
+        }else{
+            throw new FormidableException('Invalid data supplied. Form cannot be built');
+        }
+        
+    }    
+    
     
     /**
      * This is the class constructor.
@@ -99,7 +115,7 @@ class Formidable{
         $this->action = $action;
         $this->enable_file_uploads = $enable_file_uploads;
         
-        self::$_instance = $this;
+        self::SetInstance($this);
 
     }
     
@@ -107,11 +123,37 @@ class Formidable{
         return self::$_instance;
     }
     
-    protected function PushElement($obj){
-        if(is_object($obj)){
-            $this->raw_content[] = $obj;
-        }
+    protected static function SetInstance($obj){
+        self::$_instance = $obj;
     }
+    
+    protected function PushElement($obj, $replace = false){
+        if(is_object($obj)){
+            
+            $obj_id = $obj->id;
+            
+            //Check if the supplied ID is valid
+            if(empty($obj_id) || preg_match('/\s/', $obj_id)){
+                throw new FormidableException('All form elements must have a valid ID');
+            }
+            
+            //Check if an element with this ID already exists
+            if(!$replace){
+                foreach($this->raw_content as $cached_obj){
+                    $id = $cached_obj->id;
+                    
+                    if($id == $obj_id){
+                        throw new FormidableException('An element with the following ID already exists: ' . $id);
+                    }
+                }
+            }
+            
+            $this->raw_content[$obj_id] = $obj;
+            
+            //If the element has a valid id, let's create a new class attribute containing the object
+            $this->$obj_id = $obj;
+        }
+    }    
     
     /**
      * Use this method to add a label to an element
@@ -154,8 +196,8 @@ class Formidable{
         return $this;
     }
     
-    function CustomHTML($html_content){
-        FormidableCustomHTML::Build($html_content);
+    function CustomHTML($id, $html_content){
+        FormidableCustomHTML::Build($id, $html_content);
         
         return $this;        
     }
@@ -206,5 +248,14 @@ class Formidable{
     function Get(){
         $this->BakeForm();
         return $this->output;
-    }    
+    } 
+    
+    /**
+     * Use this method to get the raw form objects
+     * @public
+     */     
+    function GetRaw(){
+        return serialize($this);
+    }
+           
 } 

@@ -57,6 +57,20 @@ class FormidableInput extends Formidable{
     public static function Build($id, $name, $type = 'text', $class = '', $status = '', $value = '', $placeholder = ''){
         return new FormidableInput($id, $name, $type, $class, $status, $value, $placeholder);
     }
+    
+    /**
+    * Overrides an element's value
+    * 
+    * @param string $value
+    */
+    public function Value($value){
+        $this->value = $value;
+        
+        //Update the element in it's parent
+        Formidable::GetInstance()->PushElement($this, true);
+        
+        return Formidable::GetInstance();        
+    }
         
     /**
      * This method creates an input element
