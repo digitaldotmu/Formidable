@@ -161,8 +161,8 @@ class Formidable{
      * @param string Text for the label
      * @public
      */    
-    function Label($for, $text){
-        FormidableLabel::Build($for, $text);
+    function Label($id, $for, $text){
+        FormidableLabel::Build($id, $for, $text);
         
         return $this;
     }    

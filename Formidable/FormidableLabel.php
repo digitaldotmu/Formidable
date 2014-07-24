@@ -14,14 +14,16 @@ namespace MatilisLabs;
 
 class FormidableLabel extends Formidable{
     
+    protected $id;
     protected $for;
     protected $text;
     
-    public static function Build($for, $text = ''){
-        return new FormidableLabel($for, $text);
+    public static function Build($id, $for, $text = ''){
+        return new FormidableLabel($id, $for, $text);
     } 
     
-    protected function __construct($for, $text = ''){
+    protected function __construct($id, $for, $text = ''){
+        $this->id = $id;
         $this->for = $for;
         $this->text = $text;
         

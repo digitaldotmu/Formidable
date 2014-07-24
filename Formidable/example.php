@@ -27,18 +27,18 @@
         //$title_options = '';
         
         $form = MatilisLabs\Formidable::Build('formidable_demo')
-        ->Label('title','Title: ')
+        ->Label('for_title','title','Title: ')
         ->Select('title','title',$title_options, '','','Mrs')  
-        ->Label('first_name','First Name: ')
+        ->Label('for_first_name','first_name','First Name: ')
         ->Input('first_name','first_name','',array('input', 'text'),'','','First Name')
         ->CustomHTML('some_text', '<p>Some custom content in a paragraph</p>')
-        ->Label('address','Address: ')
+        ->Label('for_address','address','Address: ')
         ->Textarea('address', 'address')
-        ->Label('ok', 'I accept....')
+        ->Label('for_ok','ok', 'I accept....')
         ->Input('ok', 'ok', 'checkbox')
         ->Input('yes', 'radio_status', 'radio', '', '', 'yes') 
         ->Input('no', 'radio_status', 'radio', '', '', 'no')    
-        ->Input('', '', 'submit', '', '', 'Submit Form')
+        ->Input('submit', '', 'submit', '', '', 'Submit Form')
         ->Show();
         
     }catch(MatilisLabs\FormidableException $e){
