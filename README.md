@@ -3,8 +3,9 @@ Formidable
 
 A PHP Framework to create HTML forms programmatically.
 
-Usage:
+###Usage:
 
+```
 MatilisLabs\Formidable::Build('formidable_demo')
   ->Label('for_first_name','first_name','First Name: ')
   ->Input('first_name','first_name','',array('input', 'text'),'','','First Name')
@@ -12,3 +13,6 @@ MatilisLabs\Formidable::Build('formidable_demo')
   ->Textarea('address', 'address')
   ->Input('submit', '', 'submit', '', '', 'Submit Form')
   ->Show();
+```
+
+http://matilis.mu
