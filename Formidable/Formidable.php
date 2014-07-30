@@ -62,12 +62,6 @@ class Formidable{
      * @private
      */     
     private static $_instance;
-    
-    /**
-     * You can choose to use fieldsets in the form (bool)
-     * @public
-     */     
-    public $fieldsets = true;
 
     
     /**
