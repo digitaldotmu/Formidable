@@ -21,6 +21,7 @@ class FormidableInput extends Formidable{
     protected $status;
     protected $value;
     protected $placeholder;
+    protected $data;
     
     /**
      * List of valid HTML input types. List taken from: http://www.w3schools.com/tags/tag_input.asp
@@ -54,8 +55,8 @@ class FormidableInput extends Formidable{
     );
     
 
-    public static function Build($id, $name, $type = 'text', $class = '', $status = '', $value = '', $placeholder = ''){
-        return new FormidableInput($id, $name, $type, $class, $status, $value, $placeholder);
+    public static function Build($id, $name, $type = 'text', $class = '', $status = '', $value = '', $placeholder = '', $data = ''){
+        return new FormidableInput($id, $name, $type, $class, $status, $value, $placeholder, $data);
     }
     
     /**
@@ -83,7 +84,7 @@ class FormidableInput extends Formidable{
      * @param string Text for the placeholder
      * @public
      */     
-    protected function __construct($id, $name, $type = 'text', $class = '', $status = '', $value = '', $placeholder = ''){
+    protected function __construct($id, $name, $type = 'text', $class = '', $status = '', $value = '', $placeholder = '', $data = ''){
         
         $this->id = $id;
         $this->name = $name;
@@ -107,6 +108,7 @@ class FormidableInput extends Formidable{
         $this->status = $status;
         $this->value = $value;
         $this->placeholder = $placeholder;
+        $this->data = $data;
         
         //Formidable::GetInstance()->output .= $this->Bake($this);
         Formidable::GetInstance()->PushElement($this);
@@ -136,7 +138,13 @@ class FormidableInput extends Formidable{
             
             if(!empty($obj->value)){
                 $out .= ' value = "' . $obj->value . '"';
-            }        
+            }    
+            
+            if(!empty($obj->data) && array_keys($obj->data) !== range(0, count($obj->data) - 1)){
+                foreach($obj->data as $data => $value){
+                    $out .= ' data-' . $data . ' = "' . $value . '"';
+                }
+            }    
             
             $out .= '/>';  
             
